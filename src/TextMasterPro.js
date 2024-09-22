@@ -18,7 +18,7 @@ const TextMasterPro = () => {
   const [result, setResult] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState('basic');
 
   const handleTextChange = (e) => setText(e.target.value);
