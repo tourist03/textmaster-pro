@@ -3,9 +3,16 @@
 TextMaster Pro is a versatile text generation tool designed to create high-quality written content efficiently. Whether you're crafting blog posts, articles, or technical documentation, TextMaster Pro provides advanced features to streamline your writing process.
 
 ## Features
-AI-powered text generation.\
-Customizable content templates.\
-Easy integration with external tools.
+Uppercase: Convert text to uppercase.\
+Lowercase: Convert text to lowercase.\
+Capitalize: Capitalize the first letter of each word.\
+Reverse Text: Flip text backward.\
+Remove Duplicates: Clean up repeated lines or words.\
+Extract Email : Extract the email from text\
+Extract Phone : Extract the phone from text\
+#### Alot more
+
+
 
 
 ## Usage
