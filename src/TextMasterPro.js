@@ -3,7 +3,8 @@ import { Container, Card, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faFont, faTextHeight, faPencilAlt, faUndo, faList, faTextWidth,
-  faBroom, faCut, faRandom, faEnvelope, faPhone , faCopy
+  faBroom, faCut, faRandom, faEnvelope, faPhone , faCopy,
+  faSort, faFingerprint, faHeading, faAlignLeft // New icons
 } from '@fortawesome/free-solid-svg-icons';
 import TextInput from './components/TextInput';
 import TextOutput from './components/TextOutput';
@@ -74,6 +75,18 @@ const TextMasterPro = () => {
         const phones = text.match(phoneRegex) || [];
         setResult(phones.join("\n") || "No phone numbers found.");
         break;
+      case "removeDuplicates":
+        setResult([...new Set(text.split(/\s+/))].join(" "));
+        break;
+      case "sortLines":
+        setResult(text.split("\n").sort().join("\n"));
+        break;
+      case "uniqueWords":
+        setResult([...new Set(text.toLowerCase().match(/\b\w+\b/g))].join("\n"));
+        break;
+      case "titleCase":
+        setResult(text.replace(/\b\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()));
+        break;
       default:
         setResult("");
     }
@@ -112,6 +125,10 @@ const TextMasterPro = () => {
       { name: 'shuffleWords', label: 'Shuffle Words', icon: faRandom },
       { name: 'extractEmails', label: 'Extract Emails', icon: faEnvelope },
       { name: 'extractPhones', label: 'Extract Phones', icon: faPhone },
+      { name: 'removeDuplicates', label: 'Remove Duplicates', icon: faFingerprint },
+      { name: 'sortLines', label: 'Sort Lines', icon: faSort },
+      { name: 'uniqueWords', label: 'Unique Words', icon: faAlignLeft },
+      { name: 'titleCase', label: 'Title Case', icon: faHeading },
     ],
   };
 
