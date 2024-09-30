@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faFont, faTextHeight, faPencilAlt, faUndo, faList, faTextWidth,
   faBroom, faCut, faRandom, faEnvelope, faPhone, faCopy,
-  faSort, faFingerprint, faAlignLeft, faUnderline, faMinus, faVial, faMusic, faTrashAlt, faFileDownload, faTrash, faLock, faUnlock, faSearch, faExchangeAlt, faChartBar, faLanguage, faCompressArrowsAlt , faMicrophone // New icons
+  faSort, faFingerprint, faAlignLeft, faVial, faMusic, faTrashAlt, faFileDownload, faTrash, faLock, faUnlock, faSearch, faExchangeAlt, faChartBar, faLanguage, faCompressArrowsAlt ,
+  faCalculator, faAlignCenter, faCompress, faParagraph
 } from '@fortawesome/free-solid-svg-icons';
 import TextInput from './components/TextInput';
 import TextOutput from './components/TextOutput';
@@ -128,6 +129,27 @@ const TextMasterPro = () => {
           );
         }));
         break;
+      case "wordFrequency":
+        const words = text.toLowerCase().match(/\b\w+\b/g);
+        const frequency = words.reduce((acc, word) => {
+          acc[word] = (acc[word] || 0) + 1;
+          return acc;
+        }, {});
+        setResult(Object.entries(frequency)
+          .sort((a, b) => b[1] - a[1])
+          .map(([word, count]) => `${word}: ${count}`)
+          .join('\n'));
+        break;
+      case "sentenceCase":
+        setResult(text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase()));
+        break;
+      case "removeExtraSpaces":
+        setResult(text.replace(/\s+/g, ' ').trim());
+        break;
+      case "countParagraphs":
+        const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+        setResult(`Number of paragraphs: ${paragraphs.length}`);
+        break;
       default:
         setResult(text);
     }
@@ -238,7 +260,7 @@ const TextMasterPro = () => {
       }
     }
   };
-
+ 
   const operations = {
     basic: [
       { name: 'uppercase', label: 'Uppercase', icon: faFont },
@@ -257,15 +279,13 @@ const TextMasterPro = () => {
       { name: 'removeDuplicates', label: 'Remove Duplicates', icon: faFingerprint },
       { name: 'sortLines', label: 'Sort Lines', icon: faSort },
       { name: 'uniqueWords', label: 'Unique Words', icon: faAlignLeft },
-      { name: 'snakeCase', label: 'Snake Case', icon: faUnderline },
-      { name: 'kebabCase', label: 'Kebab Case', icon: faMinus },
       { name: 'countVowels', label: 'Count Vowels', icon: faVial },
       { name: 'countConsonants', label: 'Count Consonants', icon: faMusic },
       { name: 'removePunctuation', label: 'Remove Punctuation', icon: faTrashAlt },
-      { name: 'leetSpeak', label: 'Leet Speak', icon: faMicrophone },
-      { name: 'pigLatin', label: 'Pig Latin', icon: faMicrophone },
-      { name: 'morseCode', label: 'Morse Code', icon: faMicrophone },
-      { name: 'rot13', label: 'ROT13', icon: faMicrophone },
+      { name: 'wordFrequency', label: 'Word Frequency', icon: faCalculator },
+      { name: 'sentenceCase', label: 'Sentence Case', icon: faAlignCenter },
+      { name: 'removeExtraSpaces', label: 'Remove Extra Spaces', icon: faCompress },
+      { name: 'countParagraphs', label: 'Count Paragraphs', icon: faParagraph },
     ],
   };
 
@@ -309,46 +329,50 @@ const TextMasterPro = () => {
             />
 
             <TextOutput result={result} />
-            <Button variant="secondary" onClick={copyToClipboard} className="mt-3 copy-button">
-              <FontAwesomeIcon icon={faCopy} className="me-2" />
-              Copy Result
-            </Button>
-            <Button variant="secondary" onClick={saveToFile} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faFileDownload} className="me-2" />
-              Save to File
-            </Button>
-            <Button variant="danger" onClick={clearText} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faTrash} className="me-2" />
-              Clear Text
-            </Button>
-            <Button variant="info" onClick={handleFindAndReplace} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faSearch} className="me-2" />
-              Find and Replace
-            </Button>
-            <Button variant="info" onClick={handleTextStatistics} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faChartBar} className="me-2" />
-              Text Statistics
-            </Button>
-            <Button variant="info" onClick={handleTextEncryption} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faLock} className="me-2" />
-              Encrypt Text
-            </Button>
-            <Button variant="info" onClick={handleTextDecryption} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faUnlock} className="me-2" />
-              Decrypt Text
-            </Button>
-            <Button variant="info" onClick={handleTextFormatting} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faExchangeAlt} className="me-2" />
-              Text Formatting
-            </Button>
-            <Button variant="info" onClick={handleTextSummarization} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faCompressArrowsAlt} className="me-2" />
-              Summarize Text
-            </Button>
-            <Button variant="info" onClick={handleTextTranslation} className="mt-3 ms-2">
-              <FontAwesomeIcon icon={faLanguage} className="me-2" />
-              Translate Text
-            </Button>
+            <div className="mt-3 d-flex justify-content-center">
+              <Button variant="secondary" onClick={copyToClipboard} className="me-2">
+                <FontAwesomeIcon icon={faCopy} className="me-2" />
+                Copy Result
+              </Button>
+              <Button variant="danger" onClick={clearText}>
+                <FontAwesomeIcon icon={faTrash} className="me-2" />
+                Clear Text
+              </Button>
+            </div>
+            <div className="mt-3">
+              <Button variant="primary" onClick={handleFindAndReplace} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faSearch} className="me-2" />
+                Find and Replace
+              </Button>
+              <Button variant="primary" onClick={handleTextStatistics} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faChartBar} className="me-2" />
+                Text Statistics
+              </Button>
+              <Button variant="primary" onClick={handleTextEncryption} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faLock} className="me-2" />
+                Encrypt Text
+              </Button>
+              <Button variant="primary" onClick={handleTextDecryption} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faUnlock} className="me-2" />
+                Decrypt Text
+              </Button>
+              <Button variant="primary" onClick={handleTextFormatting} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faExchangeAlt} className="me-2" />
+                Text Formatting
+              </Button>
+              <Button variant="primary" onClick={handleTextSummarization} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faCompressArrowsAlt} className="me-2" />
+                Summarize Text
+              </Button>
+              <Button variant="primary" onClick={handleTextTranslation} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faLanguage} className="me-2" />
+                Translate Text
+              </Button>
+              <Button variant="primary" onClick={saveToFile} className="me-2 mb-2">
+                <FontAwesomeIcon icon={faFileDownload} className="me-2" />
+                Save to File
+              </Button>
+            </div>
           </Card.Body>
         </Card>
 
