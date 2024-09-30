@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/textmaster-pro/static/css/main.447ae31e.css",
-    "main.js": "/textmaster-pro/static/js/main.3f227132.js",
+    "main.js": "/textmaster-pro/static/js/main.3d04609a.js",
     "static/js/453.e7cb73bd.chunk.js": "/textmaster-pro/static/js/453.e7cb73bd.chunk.js",
     "index.html": "/textmaster-pro/index.html",
     "main.447ae31e.css.map": "/textmaster-pro/static/css/main.447ae31e.css.map",
-    "main.3f227132.js.map": "/textmaster-pro/static/js/main.3f227132.js.map",
+    "main.3d04609a.js.map": "/textmaster-pro/static/js/main.3d04609a.js.map",
     "453.e7cb73bd.chunk.js.map": "/textmaster-pro/static/js/453.e7cb73bd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.447ae31e.css",
-    "static/js/main.3f227132.js"
+    "static/js/main.3d04609a.js"
   ]
 }
